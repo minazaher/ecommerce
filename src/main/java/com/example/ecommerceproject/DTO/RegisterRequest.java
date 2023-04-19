@@ -14,14 +14,14 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @NoArgsConstructor
 public class RegisterRequest {
-    @Size(min = 3,max = 12, message = "Invalid!First Name must be between 3 - 12 characters ")
+    @Size(min = 3, max = 12, message = "Invalid!First Name must be between 3 - 12 characters ")
     private String firstName;
-    @Size(min = 3,max = 12, message = "Invalid!Last Name must be between 3 - 12 characters ")
+    @Size(min = 3, max = 12, message = "Invalid!Last Name must be between 3 - 12 characters ")
     private String lastName;
-    @Size(min = 3,max = 12, message = "Invalid!email must be between 3 - 12 characters ")
+    @Size(min = 3, max = 12, message = "Invalid!email must be between 3 - 12 characters ")
     @Email
     private String email;
-    @Size(min = 3,max = 12, message = "Invalid!Password must be between 3 - 12 characters ")
+    @Size(min = 3, max = 12, message = "Invalid!Password must be between 3 - 12 characters ")
     private String password;
 
 }

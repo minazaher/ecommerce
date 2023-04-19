@@ -30,7 +30,7 @@ public class UserService {
                 role(Role.USER).
                 build();
         userRepository.save(user);
-        String jwtToken  = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
@@ -47,7 +47,7 @@ public class UserService {
                 request.getEmail(), request.getPassword()
         ));
         User user = userRepository.findUserByEmail(request.getEmail());
-        String jwtToken  = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
@@ -55,17 +55,15 @@ public class UserService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 user.getEmail(), user.getPassword()
         ));
-        try
-        {
+        try {
             User newuser = userRepository.findUserByEmail(user.getEmail());
-            String jwtToken  = jwtService.generateToken(newuser);
+            String jwtToken = jwtService.generateToken(newuser);
             return AuthenticationResponse.builder().token(jwtToken).build();
-        }catch (Exception NoSuchElementException){
-            return new AuthenticationResponse("NO USER") ;
+        } catch (Exception NoSuchElementException) {
+            return new AuthenticationResponse("NO USER");
         }
     }
-
-    public boolean login(User user){
+    public boolean login(User user) {
         User u = userRepository.findUserByEmail(user.getEmail());
         return u != null;
     }

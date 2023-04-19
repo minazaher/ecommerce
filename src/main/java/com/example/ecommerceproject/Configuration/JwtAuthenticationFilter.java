@@ -19,44 +19,43 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-        private final JwtService jwtService;
-        private final UserDetailsService userDetailsService;
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                        FilterChain filterChain) throws ServletException, IOException {
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
 //      https//:www.asdasdasd.com?authrouization=Bearer ?user=sdadsads?
-            final String authHeader = request.getHeader("Authorization");
-            final String JWT;
-            final String userEmail;
+        final String authHeader = request.getHeader("Authorization");
+        final String JWT;
+        final String userEmail;
 
 //      the header must start with bearer
-            if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 //        extracting token
-            JWT = authHeader.substring(7);
+        JWT = authHeader.substring(7);
 
 //        the email is our "username" in this case
-            userEmail = jwtService.extractUsername(JWT);
+        userEmail = jwtService.extractUsername(JWT);
 
 //        checking if the user is not authenticated yet because if it is authenticated we won't need to do this process
-            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 //           retrieving the user from our database
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 //             check the function impl
-                if (jwtService.isTokenValid(JWT,userDetails)){
+            if (jwtService.isTokenValid(JWT, userDetails)) {
 //                create an authentication token to be used further in this session
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                }
-                filterChain.doFilter(request, response);
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-        }
-        private Boolean isAuthValid(String authHeader){
-            return authHeader == null ||!authHeader.startsWith("Bearer ");
+            filterChain.doFilter(request, response);
         }
     }
+
+}

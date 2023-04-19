@@ -19,10 +19,11 @@ public class JwtService {
 
     private final static String SECRET_KEY = "5368566D597133743677397A24432646294A404E635266556A576E5A72347537";
 
-    public String generateToken(UserDetails user){
+    public String generateToken(UserDetails user) {
         return generateToken(new HashMap<>(), user);
     }
-    public String generateToken(Map<String, Object> extraClaims, UserDetails user){
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails user) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -32,16 +33,16 @@ public class JwtService {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails user){
+    public boolean isTokenValid(String token, UserDetails user) {
         final String username = extractUsername(token);
-        return username.equals(user.getUsername()) &&!isTokenExpired(token);
+        return username.equals(user.getUsername()) && !isTokenExpired(token);
     }
 
     public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date()) ;
+        return extractExpiration(token).before(new Date());
     }
 
-    public Date extractExpiration(String token){
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
@@ -49,12 +50,12 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claim = extractAllClaims(token);
         return claimsResolver.apply(claim);
     }
 
-    private Claims extractAllClaims(String token){
+    private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

@@ -23,14 +23,14 @@ public class ProductService {
         String apiUrl = "https://dummyjson.com/products/";
         List<ProductExternalResponse> products = new ArrayList<>();
         for (int i = 1; i < 101; i++) {
-            ProductExternalResponse Response = restTemplate.getForObject(apiUrl+i, ProductExternalResponse.class);
+            ProductExternalResponse Response = restTemplate.getForObject(apiUrl + i, ProductExternalResponse.class);
             products.add(Response);
         }
         return products;
     }
 
-    public void saveAllProductsToDatabase(){
-        for (ProductExternalResponse p: getProducts()) {
+    public void saveAllProductsToDatabase() {
+        for (ProductExternalResponse p : getProducts()) {
             productRepository.saveAndFlush(mapToProduct(p));
         }
     }
@@ -54,6 +54,7 @@ public class ProductService {
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
+
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
@@ -71,9 +72,10 @@ public class ProductService {
     }
 
     public List<Product> getProductsPage(int page) {
-        return productRepository.findProductsByPage(PageRequest.of(page+1, 20));
+        return productRepository.findProductsByPage(PageRequest.of(page + 1, 20));
     }
 
     public List<Product> getProductsOrderedByPriceDESC() {
         return productRepository.OrderByPriceDesc();
-    }}
+    }
+}
