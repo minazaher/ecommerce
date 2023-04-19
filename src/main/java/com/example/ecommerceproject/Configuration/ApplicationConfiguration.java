@@ -3,8 +3,11 @@ package com.example.ecommerceproject.Configuration;
 import com.example.ecommerceproject.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +22,8 @@ import org.springframework.web.client.RestTemplate;
 public class ApplicationConfiguration {
 
     private final UserRepository userRepository;
+    private final JdbcTemplate jdbcTemplate;
+
     @Bean
     public UserDetailsService userDetailsService(){
         return userRepository::findUserByEmail;
@@ -44,5 +49,10 @@ public class ApplicationConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CacheManager cacheManager(){
+        return new SimpleCacheManager();
     }
 }
