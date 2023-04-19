@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final UserService userService;
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody User user){
-        System.out.println(userService.authenticate(user).token);
-        return ResponseEntity.ok(userService.authenticate(user));
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+        System.out.println(userService.authenticate(request).token);
+        return ResponseEntity.ok(userService.authenticate(request));
     }
 }
