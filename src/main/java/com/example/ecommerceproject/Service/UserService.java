@@ -21,7 +21,7 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(User request) {
         User user = User.builder().
                 firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -31,7 +31,7 @@ public class UserService {
                 build();
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return user;
     }
 
 //    public AuthenticationResponse register(User user) {
