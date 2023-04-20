@@ -21,7 +21,10 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public User register(User request) {
+    public User getUserByEmail(String email ){
+        return userRepository.findUserByEmail(email);
+    }
+    public User register(RegisterRequest request) {
         User user = User.builder().
                 firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -33,14 +36,6 @@ public class UserService {
         String jwtToken = jwtService.generateToken(user);
         return user;
     }
-
-//    public AuthenticationResponse register(User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRole(Role.USER);
-//        userRepository.save(user);
-//        String jwtToken  = jwtService.generateToken(user);
-//        return AuthenticationResponse.builder().token(jwtToken).build();
-//    }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

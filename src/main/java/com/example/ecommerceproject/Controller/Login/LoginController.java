@@ -1,4 +1,4 @@
-package com.example.ecommerceproject.Controller;
+package com.example.ecommerceproject.Controller.Login;
 
 
 import com.example.ecommerceproject.DTO.AuthenticationRequest;
@@ -17,13 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/login")
 public class LoginController {
     private final UserService userService;
-    private final UserRepository userRepository;
-
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        System.out.println(userService.authenticate(request).token);
-        return ResponseEntity.ok(userService.authenticate(request));
-    }
 
     @GetMapping("/")
     public String loginForm(Model model){
@@ -33,11 +26,11 @@ public class LoginController {
 
     @PostMapping("/processLogin")
     public String processLogin(User user , Model model){
-        model.addAttribute("user", userRepository.findUserByEmail(user.getEmail()));
+        model.addAttribute("user", userService.getUserByEmail(user.getEmail()));
         if (userService.login(user)){
             return "home";
         }
-        return "login";
+        return "redirect:/login/";
     }
 
 

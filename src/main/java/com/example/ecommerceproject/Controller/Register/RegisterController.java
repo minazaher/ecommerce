@@ -1,4 +1,4 @@
-package com.example.ecommerceproject.Controller;
+package com.example.ecommerceproject.Controller.Register;
 
 import com.example.ecommerceproject.DTO.AuthenticationResponse;
 import com.example.ecommerceproject.DTO.RegisterRequest;
@@ -17,24 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/register")
 public class RegisterController {
 
     private final UserService userService;
 
-//    @PostMapping("/")
-//    public ResponseEntity<AuthenticationResponse> register(@RequestBody User user) {
-//        return ResponseEntity.ok(userService.register(user));
-//    }
-    @GetMapping("/register")
+
+    @GetMapping("/")
     public String registerForm(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new RegisterRequest());
         return "register";
     }
 
     @PostMapping("/accountCreated")
-    public String processCreate(User user, Model model){
-        user = userService.register(user);
+    public String processCreate(RegisterRequest request, Model model){
+        User user = userService.register(request);
         model.addAttribute("User", user) ;
         return "redirect:/login/";
     }
