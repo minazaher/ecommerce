@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.PublicKey;
 import java.util.List;
 
-@RestController
-@RequestMapping("/orders")
+@Controller
+@RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
@@ -25,6 +25,26 @@ public class OrderController {
     public List<Order> getAllOrders(){
         return orderService.findAllOrders();
     }
+
+    @RequestMapping("/cart")
+    public String getCart(){
+        return "cart";
+    }
+    @RequestMapping("/tracking-order")
+    public String trackOrder(){
+        return "tracking-order";
+    }
+    @RequestMapping("/confirmation")
+    public String confirmOrder(){
+        return "confirmation";
+    }
+
+    @RequestMapping("/checkout")
+    public String checkout(){
+        return "checkout";
+    }
+
+
     @PostMapping("/save")
     public void saveOrder(@RequestBody Order order){
         orderRepository.save(order);

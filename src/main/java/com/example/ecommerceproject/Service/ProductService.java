@@ -72,7 +72,7 @@ public class ProductService {
     }
 
     public List<Product> getProductsPage(int page) {
-        return productRepository.findProductsByPage(PageRequest.of(page + 1, 20));
+        return productRepository.findProductsByPage(PageRequest.of(page-1, 9));
     }
 
     public List<Product> getProductsOrderedByPriceDESC() {

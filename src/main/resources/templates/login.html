@@ -19,53 +19,53 @@
 <body>
 <!--================ Start Header Menu Area =================-->
 <header class="header_area">
-    <div class="main_   menu">
+    <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand logo_h" th:href="@{/shop/}"><img width="70" height="70" alt="" th:src="@{https://cdn.business2community.com/wp-content/uploads/2018/01/digital_retail_1516990053.png}"></a>
+                <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
+                        data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/api/v1/login/processLogin">Home</a></li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-product.html">Blog Details</a></li>
-                                <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-                                <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/shop/}">Home</a></li>
                         <li class="nav-item active submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Pages</a>
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                               href="#"
+                               role="button">Shop</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-                                <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/shop/products}">Shop Category</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/shop/products/Apple/1}">Product Details</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/order/checkout}">Product Checkout</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/order/confirmation}">Confirmation</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/order/cart}">Shopping Cart</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item submenu dropdown">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                               href="#"
+                               role="button">Pages</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" th:href="@{/login/}">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/register/}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" th:href="@{/order/tracking-order}">Tracking</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/contact/}">Contact</a></li>
                     </ul>
 
                     <ul class="nav-shop">
-                        <li class="nav-item"><button><i class="ti-search"></i></button></li>
-                        <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
+                        <li class="nav-item">
+                            <button><i class="ti-search"></i></button>
+                        </li>
+                        <li class="nav-item">
+                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
+                        </li>
                         <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
                     </ul>
                 </div>
@@ -109,10 +109,10 @@
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Log in to enter</h3>
-                    <form action="#"  method="post"  th:action="@{processLogin}"
+                    <form class="row login_form" action="#"  method="post"  th:action="@{processLogin}"
                           th:object="${user}">
                         <div class="col-md-12 form-group">
-                            <input type="email" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"
+                            <input type="email" class="form-control" id="name" name="name" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"
                                    th:field="*{email}">
                         </div>
                         <div class="col-md-12 form-group">
