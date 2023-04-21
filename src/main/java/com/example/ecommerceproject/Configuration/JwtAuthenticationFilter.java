@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 //      the header must start with bearer
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+//            filterChain.doFilter(request, response);
             return;
         }
 //        extracting token

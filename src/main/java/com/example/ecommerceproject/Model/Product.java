@@ -1,12 +1,17 @@
 package com.example.ecommerceproject.Model;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +28,7 @@ public class Product {
     private String brand;
     private String category;
     private String thumbnail;
+
+    @ManyToMany(mappedBy = "productSet", cascade = CascadeType.ALL)
+    private Set<Wishlist> wishlists = new HashSet<>();
 }

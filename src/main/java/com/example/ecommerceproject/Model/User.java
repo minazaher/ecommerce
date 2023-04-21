@@ -32,6 +32,25 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private Wishlist wishlist;
+
+    @PrePersist
+    public void onCreate() {
+        if (wishlist == null) {
+            wishlist = new Wishlist();
+            wishlist.setUser(this);
+        }
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        if (wishlist != null) {
+            wishlist.setUser(this);
+        }
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
