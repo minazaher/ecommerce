@@ -31,6 +31,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne
+    @JoinColumn(name = "wishlist_id")
+    private Wishlist wishlist = new Wishlist();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

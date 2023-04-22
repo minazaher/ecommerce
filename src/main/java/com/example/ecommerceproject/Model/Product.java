@@ -3,10 +3,13 @@ package com.example.ecommerceproject.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +26,6 @@ public class Product {
     private String brand;
     private String category;
     private String thumbnail;
+    @ManyToMany(mappedBy = "products")
+    private Set<Wishlist> wishlists;
 }
