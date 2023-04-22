@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,5 +28,5 @@ public class Product {
     private String category;
     private String thumbnail;
     @ManyToMany(mappedBy = "products")
-    private Set<Wishlist> wishlists;
+    private Set<Wishlist> wishlists ;
 }
