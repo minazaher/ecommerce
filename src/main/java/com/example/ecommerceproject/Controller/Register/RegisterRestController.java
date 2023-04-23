@@ -9,10 +9,7 @@ import com.example.ecommerceproject.Service.UserService;
 import com.example.ecommerceproject.Service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterRestController {
 
     private final UserService userService;
-    private final WishlistService wishlistServic;
+    private final WishlistService wishlistService;
 
     @PostMapping("/")
     public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
-    @RequestMapping("/wishlist")
-    public Wishlist get(){
-        return wishlistServic.getUserWishlist();
+    @PostMapping("/wishlist/add/{userid}")
+    public Wishlist add(@PathVariable int userid){
+        return wishlistService.addProductToWishlist(userid);
     }
 
 }

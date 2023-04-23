@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String firstName;
-    @Size(min = 3, max = 15, message = "Invalid! Last Name must be 3-15 characters long")
+
     private String lastName;
     private String email;
     private String password;

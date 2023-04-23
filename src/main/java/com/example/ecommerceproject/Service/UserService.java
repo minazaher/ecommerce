@@ -6,7 +6,10 @@ import com.example.ecommerceproject.DTO.AuthenticationResponse;
 import com.example.ecommerceproject.DTO.RegisterRequest;
 import com.example.ecommerceproject.Model.Role;
 import com.example.ecommerceproject.Model.User;
+import com.example.ecommerceproject.Model.Wishlist;
 import com.example.ecommerceproject.Repository.UserRepository;
+import com.example.ecommerceproject.Repository.WishlistRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,19 +23,26 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final WishlistRepository wishlistRepository;
 
     public User getUserByEmail(String email ){
         return userRepository.findUserByEmail(email);
     }
+
+    @Transactional
     public User register(RegisterRequest request) {
-        User user = User.builder().
-                firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())).
-                role(Role.USER).
-                build();
+        Wishlist wishlist = new Wishlist();
+        wishlistRepository.save(wishlist);
+
+        User user = new User();
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(Role.USER);
+        user.setWishlist(wishlist);
         userRepository.save(user);
+
         String jwtToken = jwtService.generateToken(user);
         return user;
     }

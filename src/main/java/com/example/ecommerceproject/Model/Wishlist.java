@@ -1,5 +1,6 @@
 package com.example.ecommerceproject.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,16 +18,12 @@ import java.util.Set;
 public class Wishlist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch =  FetchType.LAZY)
     @JoinTable(
             name = "wishlist_product",
-            joinColumns = @JoinColumn(name = "wishlist_id"),
+            joinColumns =@JoinColumn(name = "wishlist_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products;
