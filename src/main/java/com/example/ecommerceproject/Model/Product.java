@@ -26,6 +26,4 @@ public class Product {
     private String brand;
     private String category;
     private String thumbnail;
-    @ManyToMany(mappedBy = "products")
-    private Set<Wishlist> wishlists;
 }

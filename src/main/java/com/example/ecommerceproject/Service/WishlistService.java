@@ -17,23 +17,34 @@ public class WishlistService {
     private final ProductRepository productRepository;
 
 
-//    public Wishlist createUserWishlist(int userid){
-//        User user = userRepository.findById(userid).orElseThrow();
-//        Wishlist wishlist = user.getWishlist();
-//        wishlist.setUser(user);
-//        return wishlist;
-//    }
-
-    public Wishlist addProductToWishlist(int userid) {
-        User user = userRepository.findById(userid).orElseThrow();
-        Product product = productRepository.findById(25L).orElseThrow();
-        Wishlist wishlist = user.getWishlist();
-
-        wishlist.getProducts().add(product);
-
+    public Wishlist createUserWishlist(int userId){
+        User user = userRepository.findById(userId).orElseThrow() ;
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUser(user);
         wishlistRepository.save(wishlist);
         return wishlist;
     }
 
+    public Wishlist addProductToWishlist(int userId, int productId) {
+        Product product = productRepository.findById((long) productId).orElseThrow();
+        Wishlist wishlist = wishlistRepository.findByUser(userId).orElseThrow();
+        wishlist.getProducts().add(product);
+        wishlistRepository.save(wishlist);
+        return wishlist;
+    }
 
+    public Wishlist deleteProductFromWishlist(int userId, int productId) {
+        Wishlist wishlist = wishlistRepository.findByUser(userId).orElseThrow();
+        Product product = productRepository.findById((long) productId).orElseThrow();
+        wishlist.getProducts().remove(product);
+        wishlistRepository.save(wishlist);
+        return wishlist;
+    }
+
+    public Wishlist getUserWishlist(int userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Wishlist wishlist = wishlistRepository.findByUser(userId).orElse(new Wishlist(user));
+        wishlistRepository.save(wishlist);
+        return wishlist;
+    }
 }

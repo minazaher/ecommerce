@@ -17,16 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterRestController {
 
     private final UserService userService;
-    private final WishlistService wishlistService;
 
     @PostMapping("/")
     public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
-    @PostMapping("/wishlist/add/{userid}")
-    public Wishlist add(@PathVariable int userid){
-        return wishlistService.addProductToWishlist(userid);
-    }
 
 }

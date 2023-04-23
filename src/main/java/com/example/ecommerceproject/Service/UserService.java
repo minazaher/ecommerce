@@ -31,8 +31,6 @@ public class UserService {
 
     @Transactional
     public User register(RegisterRequest request) {
-        Wishlist wishlist = new Wishlist();
-        wishlistRepository.save(wishlist);
 
         User user = new User();
         user.setFirstName(request.getFirstName());
@@ -40,7 +38,6 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.USER);
-        user.setWishlist(wishlist);
         userRepository.save(user);
 
         String jwtToken = jwtService.generateToken(user);

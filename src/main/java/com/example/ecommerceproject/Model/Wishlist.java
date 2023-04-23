@@ -18,8 +18,11 @@ import java.util.Set;
 public class Wishlist {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @ManyToMany(fetch =  FetchType.LAZY)
     @JoinTable(
             name = "wishlist_product",
@@ -27,4 +30,8 @@ public class Wishlist {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products;
+
+    public Wishlist(User user) {
+        this.user = user;
+    }
 }

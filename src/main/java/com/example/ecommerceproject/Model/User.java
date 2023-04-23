@@ -25,15 +25,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String firstName;
-
     private String lastName;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne
-    @JoinColumn(name = "wishlist_id")
-    private Wishlist wishlist = new Wishlist();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
