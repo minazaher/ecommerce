@@ -3,6 +3,7 @@ package com.example.ecommerceproject.Controller.Product;
 
 import com.example.ecommerceproject.Model.Product;
 import com.example.ecommerceproject.Service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,14 +48,15 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String getProductsByCategory(@RequestParam(value = "category", required = false, defaultValue = "all") String category,
+    public String getProductsByCategory(HttpSession session,
+            @RequestParam(value = "category", required = false, defaultValue = "all") String category,
                                         Model model) {
         initializeData();
         if (category.equals("all"))
             products = productService.getAllProducts();
         else
             products = productService.getProductsByCategory(category);
-
+        session.getAttribute("user");
         sendAttributes(model);
         return "category";
     }

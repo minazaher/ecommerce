@@ -1,4 +1,4 @@
-package com.example.ecommerceproject.Controller;
+package com.example.ecommerceproject.Controller.Wishlist;
 
 
 import com.example.ecommerceproject.Model.Wishlist;
@@ -24,10 +24,13 @@ public class WishlistRestController {
         return wishlistService.createUserWishlist(userid);
     }
 
-    @PutMapping("/addProduct/{userId}")
-    public Wishlist addProduct(@PathVariable int userId,
-                        @RequestParam(value = "productId", required = true) int productId){
-        return wishlistService.addProductToWishlist(userId, productId);
+    @PutMapping("/addProduct/{userId}/{productId}")
+    public Wishlist addProduct(@PathVariable String userId,
+                        @PathVariable String productId){
+        System.out.println(userId);
+        System.out.println(productId);
+        return wishlistService.addProductToWishlist(Integer.parseInt(userId),
+                Integer.parseInt(productId));
     }
 
     @PutMapping("/deleteProduct/{userId}")

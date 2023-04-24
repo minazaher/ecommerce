@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -26,29 +27,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-//      https//:www.asdasdasd.com?authrouization=Bearer ?user=sdadsads?
         final String authHeader = request.getHeader("Authorization");
         final String JWT;
         final String userEmail;
 
-//      the header must start with bearer
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-//        extracting token
-        JWT = authHeader.substring(7);
+       JWT = authHeader.substring(7);
 
-//        the email is our "username" in this case
         userEmail = jwtService.extractUsername(JWT);
-
-//        checking if the user is not authenticated yet because if it is authenticated we won't need to do this process
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//           retrieving the user from our database
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-//             check the function impl
             if (jwtService.isTokenValid(JWT, userDetails)) {
-//                create an authentication token to be used further in this session
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -56,6 +48,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }
+    }
+
+
+    private String extractToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
 }

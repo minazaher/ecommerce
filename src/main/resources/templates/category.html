@@ -54,6 +54,8 @@
                 <li class="nav-item"><a class="nav-link" th:href="@{/login/}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/register/}">Register</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/order/tracking-order}">Tracking</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/wishlist}">Wishlist</a></li>
+
               </ul>
             </li>
             <li class="nav-item"><a class="nav-link" th:href="@{/contact/}">Contact</a></li>
@@ -182,10 +184,16 @@
                       <button><i class="ti-search"></i></button>
                     </li>
                     <li>
-                      <button><i class="ti-shopping-cart"></i></button>
+                      <button onclick="addToCart(this)"
+                              th:attr="data-product-id=${product.id}">
+                        <i class="ti-shopping-cart"></i></button>
                     </li>
                     <li>
-                      <button><i class="ti-heart"></i></button>
+                      <button onclick="addToWishlist(this)"
+                              th:attr="data-product-id=${product.id},
+                               data-user-id=${session.user.getId()}">
+                        <i class="ti-heart"></i>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -327,14 +335,58 @@
   });
 </script>
 
-<script src="vendors/jquery/jquery-3.2.1.min.js"></script>
-<script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="vendors/skrollr.min.js"></script>
-<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-<script src="vendors/nice-select/jquery.nice-select.min.js"></script>
-<script src="vendors/nouislider/nouislider.min.js"></script>
-<script src="vendors/jquery.ajaxchimp.min.js"></script>
-<script src="vendors/mail-script.js"></script>
-<script src="js/main.js"></script>
+<script type="text/javascript">
+  function addToWishlist(button) {
+    var productId = button.getAttribute("data-product-id");
+    var userId = button.getAttribute("data-user-id");
+    var url = "/rest/wishlist/addProduct/" + userId + "/" + productId;
+
+    // make AJAX request to add product to wishlist
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Product added to wishlist!");
+      }
+    };
+    xhr.send();
+  }
+</script>
+
+<script>
+  function addToCart(button) {
+    var productId = button.getAttribute("data-product-id");
+    var url = "/" + "/cart/add/"+ productId;
+
+    // make AJAX request to add product to wishlist
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Product added to cart!");
+      }
+    };
+    xhr.send();
+  }
+
+</script>
+
+
+
+
+
+
+
+
+<script th:src="@{/vendors/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/vendors/bootstrap/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/vendors/skrollr.min.js}"></script>
+<script th:src="@{/vendors/owl-carousel/owl.carousel.min.js}"></script>
+<script th:src="@{/vendors/nice-select/jquery.nice-select.min.js}"></script>
+<script th:src="@{/vendors/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/vendors/mail-script.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

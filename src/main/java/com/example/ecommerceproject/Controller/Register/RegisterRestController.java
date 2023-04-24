@@ -19,9 +19,8 @@ public class RegisterRestController {
     private final UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
-
 
 }

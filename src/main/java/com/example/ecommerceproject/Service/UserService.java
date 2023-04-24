@@ -11,6 +11,7 @@ import com.example.ecommerceproject.Repository.UserRepository;
 import com.example.ecommerceproject.Repository.WishlistRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class UserService {
     }
 
     @Transactional
-    public User register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) {
 
         User user = new User();
         user.setFirstName(request.getFirstName());
@@ -41,7 +42,7 @@ public class UserService {
         userRepository.save(user);
 
         String jwtToken = jwtService.generateToken(user);
-        return user;
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
