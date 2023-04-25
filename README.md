@@ -18,7 +18,9 @@ This is a web application for an E-commerce store built with Java Spring Boot an
 ## Setup
 
 1. Clone the repository:
-```git clone https://github.com/minazaher/ecommerce.git```
+```
+git clone https://github.com/minazaher/ecommerce.git
+```
 
 2. Create a Maria database for the application.
 
