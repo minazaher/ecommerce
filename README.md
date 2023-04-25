@@ -16,6 +16,14 @@ This is a web application for an E-commerce store built with Java Spring Boot an
 - Maven
 - MySQL
 
+## Installation
+
+To run this application locally, follow these steps:
+
+1. Clone the repository
+2. Install dependencies using Maven: ```mvn install```
+3. Launch the application: `mvn spring-boot:run`
+
 ## Setup
 
 1. Clone the repository:
@@ -25,15 +33,12 @@ git clone https://github.com/minazaher/ecommerce.git
 
 3. Set the database properties in the `application.properties` file.
 
-4. Build the application with Maven.
+2. Install dependencies using Maven: ```mvn install```
 
-5. Run the application.
-'''
-mvn spring-boot:run
-'''
+3. Launch the application: `mvn spring-boot:run`
 
 6. Access the application at `http://localhost:8080`.
 
 
 
-
+  
