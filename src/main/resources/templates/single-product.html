@@ -123,7 +123,11 @@
             <button class="reduced items-count"
                     onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                     type="button"><i class="ti-angle-right"></i></button>
-            <a class="button primary-btn" href="#">Add to Cart</a>
+            <button onclick="addToCart(this)"
+                    th:attr="data-product-id=${product.id}">
+              <i class="ti-shopping-cart"></i></button>
+              <a class="button primary-btn" href="#">Add to Cart</a>
+            </button>
           </div>
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>

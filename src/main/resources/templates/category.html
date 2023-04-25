@@ -357,20 +357,20 @@
 <script>
   function addToCart(button) {
     var productId = button.getAttribute("data-product-id");
-    var url = "/" + "/cart/add/"+ productId;
 
-    // make AJAX request to add product to wishlist
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log("Product added to cart!");
+    // make AJAX request to add product to cart
+    $.ajax({
+      url: '/rest/cart/add/'+ productId,
+      type: 'POST',
+      data: {productId: productId},
+      success: function(response) {
+        // display success message or update cart count
+      },
+      error: function(xhr) {
+        // display error message
       }
-    };
-    xhr.send();
+    });
   }
-
 </script>
 
 
