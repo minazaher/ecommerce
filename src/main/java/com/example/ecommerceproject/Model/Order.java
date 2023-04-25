@@ -17,8 +17,8 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
-    private Long userId;
+    private int orderId;
+    private int userId;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "order_product",
