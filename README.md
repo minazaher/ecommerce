@@ -28,6 +28,9 @@ git clone https://github.com/minazaher/ecommerce.git
 4. Build the application with Maven.
 
 5. Run the application.
+'''
+mvn spring-boot:run
+'''
 
 6. Access the application at `http://localhost:8080`.
 
