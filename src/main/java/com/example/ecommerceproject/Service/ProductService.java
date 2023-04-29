@@ -78,4 +78,7 @@ public class ProductService {
     public List<Product> getProductsOrderedByPriceDESC() {
         return productRepository.OrderByPriceDesc();
     }
+    public void saveProduct(Product product) {
+        productRepository.save(product);
+    }
 }

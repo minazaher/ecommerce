@@ -31,8 +31,8 @@ public class RegisterController {
 
     @PostMapping("/accountCreated")
     public String processCreate(RegisterRequest request, Model model){
-//        User user = userService.register(request);
-//        model.addAttribute("User", user) ;
+        User user = userService.register(request);
+        model.addAttribute("User", user) ;
         return "redirect:/login/";
     }
 

@@ -30,8 +30,7 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    @Transactional
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(RegisterRequest request) {
 
         User user = new User();
         user.setFirstName(request.getFirstName());
@@ -39,6 +38,20 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.USER);
+        userRepository.save(user);
+
+        String jwtToken = jwtService.generateToken(user);
+        return user;
+    }
+
+    public AuthenticationResponse registerِAndGetToken(RegisterRequest request) {
+
+        User user = new User();
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(Role.ADMIN);
         userRepository.save(user);
 
         String jwtToken = jwtService.generateToken(user);

@@ -1,12 +1,12 @@
 package com.example.ecommerceproject.Controller.Product;
 
 import com.example.ecommerceproject.Model.Product;
+import com.example.ecommerceproject.Model.Role;
+import com.example.ecommerceproject.Model.User;
 import com.example.ecommerceproject.Service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +32,20 @@ public class ProductRestController {
             return productService.getProductsById(id);
         }
 
-        @RequestMapping("/admin/save")
+        @RequestMapping("/save")
         public void saveAllProductsToDatabase() {
             productService.saveAllProductsToDatabase();
+        }
+
+
+        @PostMapping("/add")
+            public String addProduct(HttpSession session, Product product){
+            User user = (User) session.getAttribute("user");
+            if (user.getRole() == Role.ADMIN){
+                productService.saveProduct(product);
+                return product.toString();
+            }
+            return "You Don't Have the authority to Add product";
         }
 
 

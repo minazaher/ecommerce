@@ -35,7 +35,6 @@ public class CartController {
         if (cart == null || cart.isEmpty()) {
             return "redirect:/cart";
         }
-
         User user = (User) session.getAttribute("user");
         Order order = new Order();
         int orderPrice = 0;
@@ -48,9 +47,8 @@ public class CartController {
         orderService.saveOrder(order);
 
         session.removeAttribute("cart");
-
         model.addAttribute("order", order);
-        return "confirmation";
+        return "cart";
     }
 
 

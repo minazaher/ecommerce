@@ -1,16 +1,13 @@
 package com.example.ecommerceproject.Controller;
 
 import com.example.ecommerceproject.Model.Order;
-import com.example.ecommerceproject.Model.Product;
 import com.example.ecommerceproject.Repository.OrderRepository;
 import com.example.ecommerceproject.Service.OrderService;
 import com.example.ecommerceproject.Service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PublicKey;
 import java.util.List;
 
 @Controller
@@ -23,7 +20,7 @@ public class OrderController {
 
     @RequestMapping("/")
     public List<Order> getAllOrders(){
-        return orderService.findAllOrders();
+        return orderService.getAllOrders();
     }
 
     @RequestMapping("/cart")
@@ -38,13 +35,10 @@ public class OrderController {
     public String confirmOrder(){
         return "confirmation";
     }
-
     @RequestMapping("/checkout")
     public String checkout(){
         return "checkout";
     }
-
-
     @PostMapping("/save")
     public void saveOrder(@RequestBody Order order){
         orderRepository.save(order);
