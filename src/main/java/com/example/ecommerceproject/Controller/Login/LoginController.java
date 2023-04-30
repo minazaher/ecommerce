@@ -40,18 +40,4 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/processLogin")
-    public String processLogin(User user , HttpSession session, Model model){
-        user = userService.getUserByEmail(user.getEmail());
-        model.addAttribute("user", user );
-        session.setAttribute("user", user);
-        if (userService.login(user)){
-            return "home";
-        }
-        return "redirect:/login/";
-    }
-
-
-
-
 }

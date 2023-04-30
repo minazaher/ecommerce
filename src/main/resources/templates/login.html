@@ -242,8 +242,14 @@
             },
             body: body
         }).then(response => {
-            const token =response.headers.get('Authorization');
-            localStorage.setItem('token', token);
+            if (response.status === 200) {
+                const token =response.headers.get('Authorization');
+                localStorage.setItem('token', token);
+                window.location.href = '/home';
+            } else {
+                alert("Login failed. Please try again.");
+            }
+
         });
     }
 

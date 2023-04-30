@@ -28,7 +28,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/Admin/**").hasAuthority("USER")
+                .requestMatchers("/Admin/**").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()

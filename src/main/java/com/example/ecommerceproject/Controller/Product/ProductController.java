@@ -23,7 +23,7 @@ public class ProductController {
     List<String> categories = new ArrayList<>();
     List<String> brands = new ArrayList<>();
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String getHome(){
         return "home";
     }
