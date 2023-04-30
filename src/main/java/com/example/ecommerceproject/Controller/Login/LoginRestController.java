@@ -5,6 +5,7 @@ import com.example.ecommerceproject.DTO.AuthenticationRequest;
 import com.example.ecommerceproject.DTO.AuthenticationResponse;
 import com.example.ecommerceproject.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,9 @@ public class LoginRestController {
     private final UserService userService;
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        System.out.println(userService.authenticate(request).token);
-        return ResponseEntity.ok(userService.authenticate(request));
+        AuthenticationResponse response = userService.authenticate(request);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization",  response.getToken());
+        return ResponseEntity.ok().headers(headers).body(response);
     }
 }
