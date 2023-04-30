@@ -5,12 +5,10 @@ import com.example.ecommerceproject.Model.Product;
 import com.example.ecommerceproject.Service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/shop")
 public class ProductController {
     private final ProductService productService;
     private final ProductRestController productRestController;
@@ -48,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String getProductsByCategory(HttpSession session,
+    public String getProductsByCategory(
             @RequestParam(value = "category", required = false, defaultValue = "all") String category,
                                         Model model) {
         initializeData();
@@ -56,7 +53,6 @@ public class ProductController {
             products = productService.getAllProducts();
         else
             products = productService.getProductsByCategory(category);
-        session.getAttribute("user");
         sendAttributes(model);
         return "category";
     }
@@ -77,6 +73,11 @@ public class ProductController {
         sendAttributes(model);
         return "category";
     }
+    @RequestMapping("/addProduct")
+    public String addProduct() {
+        return "addProduct";
+    }
+
 
     private void initializeData(){
         categories = productService.getCategories();

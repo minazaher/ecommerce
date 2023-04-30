@@ -6,12 +6,12 @@ import com.example.ecommerceproject.Model.User;
 import com.example.ecommerceproject.Service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
 @RequiredArgsConstructor
 
 public class ProductRestController {
@@ -38,14 +38,10 @@ public class ProductRestController {
         }
 
 
-        @PostMapping("/add")
-            public String addProduct(HttpSession session, Product product){
-            User user = (User) session.getAttribute("user");
-            if (user.getRole() == Role.ADMIN){
-                productService.saveProduct(product);
-                return product.toString();
-            }
-            return "You Don't Have the authority to Add product";
+        @PostMapping("/Admin/addProduct")
+            public ResponseEntity<String> addProduct(@RequestBody Product product){
+            productService.saveProduct(product);
+            return ResponseEntity.ok("Product Added!");
         }
 
 

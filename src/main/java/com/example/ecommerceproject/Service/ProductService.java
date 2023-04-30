@@ -79,6 +79,7 @@ public class ProductService {
         return productRepository.OrderByPriceDesc();
     }
     public void saveProduct(Product product) {
+        product.setId(101L);
         productRepository.save(product);
     }
 }
